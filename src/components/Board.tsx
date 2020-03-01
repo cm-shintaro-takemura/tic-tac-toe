@@ -16,20 +16,31 @@ const styles = StyleSheet.create({
   }
 })
 
-function Board() {
-  const status = 'Next player: X'
+type Squares = {
+  values: Array<'X' | '0' | null>,
+  xIsNext: boolean
+}
 
-  const initialSquares: Array<string | null> = Array(9).fill(null)
+function Board() {
+  const initialSquares: Squares = {
+    values: Array(9).fill(null),
+    xIsNext: true
+  }
   const [squares, setSquares] = React.useState(initialSquares)
 
+  const status = 'Next player: ' + (squares.xIsNext ? 'X' : '0')
+
   const handlePress = (i: number) => {
-    const newSquares = squares.slice()
-    newSquares[i] = 'X'
-    setSquares(newSquares)
+    const values = squares.values.slice()
+    values[i] = squares.xIsNext ? 'X' : '0'
+    setSquares({
+      values: values,
+      xIsNext: !squares.xIsNext
+    })
   }
 
   const renderSquare = (i: number) => {
-    return <Square value={squares[i]} onPress={() => handlePress(i)} />
+    return <Square value={squares.values[i]} onPress={() => handlePress(i)} />
   }
 
   return (
