@@ -19,8 +19,17 @@ const styles = StyleSheet.create({
 function Board() {
   const status = 'Next player: X'
 
-  const renderSquare = (value: number) => {
-    return <Square />
+  const initialSquares: Array<string | null> = Array(9).fill(null)
+  const [squares, setSquares] = React.useState(initialSquares)
+
+  const handlePress = (i: number) => {
+    const newSquares = squares.slice()
+    newSquares[i] = 'X'
+    setSquares(newSquares)
+  }
+
+  const renderSquare = (i: number) => {
+    return <Square value={squares[i]} onPress={() => handlePress(i)} />
   }
 
   return (

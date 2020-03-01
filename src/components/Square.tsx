@@ -15,10 +15,16 @@ const styles = StyleSheet.create({
   }
 })
 
-function Square() {
+type Props = {
+  value: string | null
+  onPress: () => void
+}
+
+function Square(props: Props) {
+  const { value, onPress } = props
   return (
-    <TouchableOpacity style={styles.container}>
-      <Text style={styles.text}>x</Text>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
+      <Text style={styles.text}>{value}</Text>
     </TouchableOpacity>
   )
 }
