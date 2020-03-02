@@ -21,6 +21,26 @@ type Squares = {
   xIsNext: boolean
 }
 
+function calculateWinner(squares: Squares) {
+  const lines = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+  ];
+  for (let i = 0; i < lines.length; i++) {
+    const [a, b, c] = lines[i];
+    if (squares.values[a] && squares.values[a] === squares.values[b] && squares.values[a] === squares.values[c]) {
+      return squares.values[a];
+    }
+  }
+  return null;
+}
+
 function Board() {
   const initialSquares: Squares = {
     values: Array(9).fill(null),
@@ -28,7 +48,13 @@ function Board() {
   }
   const [squares, setSquares] = React.useState(initialSquares)
 
-  const status = 'Next player: ' + (squares.xIsNext ? 'X' : '0')
+  const winner = calculateWinner(squares)
+  let status: string
+  if (winner) {
+    status = 'Winner: ' + winner
+  } else {
+    status = 'Next player: ' + (squares.xIsNext ? 'X' : '0')
+  }
 
   const handlePress = (i: number) => {
     const values = squares.values.slice()
