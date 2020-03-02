@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 })
 
 type Props = {
-  value: string | null
+  value: 'X' | '0' | null
   onPress: () => void
 }
 
