@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Button } from 'react-native'
 import Square from './Square'
 
 const styles = StyleSheet.create({
@@ -13,6 +13,9 @@ const styles = StyleSheet.create({
   rowContainer: {
     flex: 1,
     flexDirection: 'row',
+  },
+  reset: {
+    marginVertical: 10
   }
 })
 
@@ -74,6 +77,10 @@ function Board() {
     return <Square value={squares.values[i]} onPress={() => handlePress(i)} />
   }
 
+  const resetSquares = React.useCallback(
+    () => setSquares(initialSquares), [setSquares, initialSquares]
+  )
+
   return (
     <View style={styles.container}>
       <Text style={styles.status}>{status}</Text>
@@ -91,6 +98,9 @@ function Board() {
         {renderSquare(6)}
         {renderSquare(7)}
         {renderSquare(8)}
+      </View>
+      <View style={styles.reset}>
+        <Button title="リセットする" onPress={resetSquares} />
       </View>
     </View>
   )
