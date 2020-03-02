@@ -58,6 +58,11 @@ function Board() {
 
   const handlePress = (i: number) => {
     const values = squares.values.slice()
+
+    if (calculateWinner(squares) || squares.values[i]) {
+      return
+    }
+
     values[i] = squares.xIsNext ? 'X' : '0'
     setSquares({
       values: values,
