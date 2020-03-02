@@ -59,19 +59,21 @@ function Board() {
     status = 'Next player: ' + (squares.xIsNext ? 'X' : '0')
   }
 
-  const handlePress = (i: number) => {
-    const values = squares.values.slice()
+  const handlePress = React.useCallback(
+    (i: number) => {
+      const values = squares.values.slice()
 
-    if (calculateWinner(squares) || squares.values[i]) {
-      return
-    }
+      if (calculateWinner(squares) || squares.values[i]) {
+        return
+      }
 
-    values[i] = squares.xIsNext ? 'X' : '0'
-    setSquares({
-      values: values,
-      xIsNext: !squares.xIsNext
-    })
-  }
+      values[i] = squares.xIsNext ? 'X' : '0'
+      setSquares({
+        values: values,
+        xIsNext: !squares.xIsNext
+      })
+    }, [squares]
+  )
 
   const renderSquare = (i: number) => {
     return <Square value={squares.values[i]} onPress={() => handlePress(i)} />
